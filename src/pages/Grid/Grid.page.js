@@ -12,6 +12,7 @@ import {
 } from "../../features/usersGrid/usersGridSlice"
 import NoUsersFound from "../../components/NoUsersFound"
 import ErrorMessage from "../../components/ErrorMessage"
+import Users from "../../components/Users"
 
 function GridPage() {
   const dispatch = useDispatch()
@@ -43,11 +44,7 @@ function GridPage() {
       <Container>
         <h1>Grid</h1>
         <div className={styles.grid}>
-          {filteredUsers.map(u => (
-            <div key={u.id} className={styles.card}>
-              <UserItem {...u} isInGrid />
-            </div>
-          ))}
+          <Users users={filteredUsers} cardClassName={styles.card} isInGrid />
         </div>
         <NoUsersFound
           error={error}

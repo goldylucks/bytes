@@ -7,6 +7,7 @@ import ErrorMessage from "../../components/ErrorMessage"
 import NoUsersFound from "../../components/NoUsersFound"
 import Topbar from "../../components/Topbar/Topbar"
 import UserItem from "../../components/UserItem/UserItem"
+import Users from "../../components/Users"
 import {
   fetchUsers,
   selectFilteredUsers,
@@ -41,11 +42,7 @@ function HomePage() {
       <Topbar query={_query} onChange={handleQueryChange} />
       <Container>
         <h1>List</h1>
-        {filteredUsers.map(u => (
-          <div key={u.id} style={{ marginBottom: 20 }}>
-            <UserItem {...u} />
-          </div>
-        ))}
+        <Users users={filteredUsers} cardStyle={{ marginBottom: 20 }} />
         <NoUsersFound
           error={error}
           users={filteredUsers}
