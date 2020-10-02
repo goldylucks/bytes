@@ -1,10 +1,21 @@
 import React from "react"
-import { Link } from "@reach/router"
+import { useLocation, useNavigate } from "@reach/router"
+import ListIcon from "@material-ui/icons/List"
+import AppsIcon from "@material-ui/icons/Apps"
+import ToggleButton from "@material-ui/lab/ToggleButton"
+import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup"
 
 import Container from "../Container"
 import styles from "./Topbar.module.css"
 
 function Topbar({ query, onChange }) {
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  const handleViewChange = (evt, newView) => {
+    navigate(newView)
+  }
+
   return (
     <div className={styles.topbar}>
       <Container>
@@ -15,12 +26,19 @@ function Topbar({ query, onChange }) {
             placeholder="Search users"
             className={styles.input}
           />
-          <div>
-            <Link to="/" style={{ marginRight: 10 }}>
-              List
-            </Link>
-            <Link to="/grid">Grid</Link>
-          </div>
+          <ToggleButtonGroup
+            value={location.pathname}
+            exclusive
+            onChange={handleViewChange}
+            aria-label="Toggle View"
+          >
+            <ToggleButton value="/" aria-label="List view">
+              <ListIcon />
+            </ToggleButton>
+            <ToggleButton value="/grid" aria-label="Grid view">
+              <AppsIcon />
+            </ToggleButton>
+          </ToggleButtonGroup>
         </div>
       </Container>
     </div>
