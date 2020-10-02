@@ -4,6 +4,10 @@ import camelCaseKeys from "camelcase-keys"
 export const fetchUsers = createAsyncThunk(
   "usersList/fetchUsers",
   async (query = "") => {
+    // simulate error
+    if (query === "error") {
+      throw new Error("There was an error, please try again")
+    }
     // query param doesn't do anything, I'm putting it here to show how I'd do it
     // if it was working
     const response = await fetch(`https://reqres.in/api/users?query=${query}`)
@@ -23,6 +27,7 @@ const usersListSlice = createSlice({
   extraReducers: {
     [fetchUsers.pending]: (state, action) => {
       state.query = action.meta.arg
+      state.users = []
       state.error = ""
       state.isFetching = true
     },

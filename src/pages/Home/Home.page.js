@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { useDebouncedCallback } from "use-debounce"
 
 import Container from "../../components/Container"
+import ErrorMessage from "../../components/ErrorMessage"
+import NoUsersFound from "../../components/NoUsersFound"
 import Topbar from "../../components/Topbar/Topbar"
 import UserItem from "../../components/UserItem/UserItem"
 import {
@@ -12,7 +14,7 @@ import {
 
 function HomePage() {
   const dispatch = useDispatch()
-  const { query } = useSelector(state => state.usersList)
+  const { query, isFetching, error } = useSelector(state => state.usersList)
   const filteredUsers = useSelector(selectFilteredUsers)
   const [_query, _setQuery] = useState(query)
   const debouncedFetchUsers = useDebouncedCallback(value => {
@@ -20,9 +22,9 @@ function HomePage() {
   }, 50)
 
   useEffect(() => {
-    // if there's a query it means we are coming here from another page
-    // so we already fetched the users for this query
-    if (query) {
+    // if there's a query or users it means we are coming here from another page
+    // so we already fetched the users for this query, no need to refetch
+    if (query || filteredUsers.length) {
       return
     }
     dispatch(fetchUsers(""))
@@ -44,6 +46,13 @@ function HomePage() {
             <UserItem {...u} />
           </div>
         ))}
+        <NoUsersFound
+          error={error}
+          users={filteredUsers}
+          query={query}
+          isFetching={isFetching}
+        />
+        <ErrorMessage error={error} />
       </Container>
     </div>
   )

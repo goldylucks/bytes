@@ -10,10 +10,12 @@ import {
   fetchUsers,
   selectFilteredUsers,
 } from "../../features/usersGrid/usersGridSlice"
+import NoUsersFound from "../../components/NoUsersFound"
+import ErrorMessage from "../../components/ErrorMessage"
 
 function GridPage() {
   const dispatch = useDispatch()
-  const { query } = useSelector(state => state.usersGrid)
+  const { query, isFetching, error } = useSelector(state => state.usersGrid)
   const filteredUsers = useSelector(selectFilteredUsers)
   const [_query, _setQuery] = useState(query)
   const debouncedFetchUsers = useDebouncedCallback(value => {
@@ -21,9 +23,9 @@ function GridPage() {
   }, 50)
 
   useEffect(() => {
-    // if there's a query it means we are coming here from another page
-    // so we already fetched the users for this query
-    if (query) {
+    // if there's a query or users it means we are coming here from another page
+    // so we already fetched the users for this query, no need to refetch
+    if (query || filteredUsers.length) {
       return
     }
     dispatch(fetchUsers(""))
@@ -47,6 +49,13 @@ function GridPage() {
             </div>
           ))}
         </div>
+        <NoUsersFound
+          error={error}
+          users={filteredUsers}
+          query={query}
+          isFetching={isFetching}
+        />
+        <ErrorMessage error={error} />
       </Container>
     </div>
   )
