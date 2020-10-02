@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useDebouncedCallback } from "use-debounce"
 
+import useComponentWillMount from "../../hooks/useComponentWillMount"
 import Container from "../../components/Container"
 import ErrorMessage from "../../components/ErrorMessage"
 import NoUsersFound from "../../components/NoUsersFound"
 import Topbar from "../../components/Topbar/Topbar"
-import UserItem from "../../components/UserItem/UserItem"
 import Users from "../../components/Users"
 import {
   fetchUsers,
@@ -22,7 +22,7 @@ function HomePage() {
     dispatch(fetchUsers(value))
   }, 50)
 
-  useEffect(() => {
+  useComponentWillMount(() => {
     // if there's a query or users it means we are coming here from another page
     // so we already fetched the users for this query, no need to refetch
     if (query || filteredUsers.length) {

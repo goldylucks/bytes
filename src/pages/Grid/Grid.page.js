@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useDebouncedCallback } from "use-debounce"
 
+import useComponentWillMount from "../../hooks/useComponentWillMount"
 import styles from "./Grid.module.css"
 import Container from "../../components/Container"
 import Topbar from "../../components/Topbar/Topbar"
-import UserItem from "../../components/UserItem/UserItem"
 import {
   fetchUsers,
   selectFilteredUsers,
@@ -23,7 +23,7 @@ function GridPage() {
     dispatch(fetchUsers(value))
   }, 50)
 
-  useEffect(() => {
+  useComponentWillMount(() => {
     // if there's a query or users it means we are coming here from another page
     // so we already fetched the users for this query, no need to refetch
     if (query || filteredUsers.length) {
