@@ -18,6 +18,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start:prod": "serve -s build",
+    "prebuild": "rimraf build",
+    "predeploy": "yarn build && cd build && cp index.html 200.html",
+    "deploy": "surge -p build -d bytes-adam.surge.sh",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -36,5 +40,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "rimraf": "^3.0.2",
+    "serve": "^11.3.2",
+    "surge": "^0.21.6"
   }
 }
