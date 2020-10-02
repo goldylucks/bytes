@@ -9,7 +9,7 @@ import "./App.css"
 function App() {
   return (
     <div className="app-container">
-      <Router>
+      <Router primary={false}>
         <HomePage path="/" />
         <GridPage path="/grid" />
       </Router>
