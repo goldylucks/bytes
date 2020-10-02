@@ -1,9 +1,9 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSelector, createSlice } from "@reduxjs/toolkit"
 import camelCaseKeys from "camelcase-keys"
 
 export const fetchUsers = createAsyncThunk(
   "usersGrid/fetchUsers",
-  async query => {
+  async (query = "") => {
     // query param doesn't do anything, I'm putting it here to show how I'd do it
     // if it was working
     const response = await fetch(`https://reqres.in/api/users?query=${query}`)
@@ -38,3 +38,17 @@ const usersGridSlice = createSlice({
 })
 
 export default usersGridSlice.reducer
+
+const selectQuery = state => state.usersGrid.query
+const selectUsers = state => state.usersGrid.users
+
+export const selectFilteredUsers = createSelector(
+  [selectQuery, selectUsers],
+  (query, users) =>
+    users.filter(
+      user =>
+        user.firstName.includes(query) ||
+        user.lastName.includes(query) ||
+        user.email.includes(query)
+    )
+)
