@@ -27,7 +27,6 @@ const usersListSlice = createSlice({
   extraReducers: {
     [fetchUsers.pending]: (state, action) => {
       state.query = action.meta.arg
-      state.users = []
       state.error = ""
       state.isFetching = true
     },
@@ -36,6 +35,7 @@ const usersListSlice = createSlice({
       state.isFetching = false
     },
     [fetchUsers.rejected]: (state, action) => {
+      state.users = []
       state.error = action.error.message
       state.isFetching = false
     },
