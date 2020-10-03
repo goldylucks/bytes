@@ -24,11 +24,35 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React Redux App</title>
+    <title>Adam's Bytes home assignment</title>
+
+    <style>
+      @keyframes enter-topbar {
+        from {
+          opacity: 0;
+        }
+      }
+      .topbar {
+        animation: enter-topbar 500ms;
+        position: fixed;
+        height: 50px;
+        box-shadow: 0px 5px 5px 0px rgba(194, 194, 194, 1);
+        width: 100%;
+        display: flex;
+        top: 0;
+        left: 0;
+        opacity: 1;
+        align-items: center;
+        background: #fff;
+        z-index: 100;
+      }
+    </style>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div id="root">
+      <div class="topbar"></div>
+    </div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
